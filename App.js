@@ -14,6 +14,7 @@ import * as Colors from './src/constants/colors';
 //Telas
 import Home from './src/Home';
 import Profile from './src/Profile';
+import SignIn from './src/user/SignIn';
 
 const HomeStack = createStackNavigator();
 const ProfileStack = createStackNavigator();
@@ -32,6 +33,7 @@ const ProfileStackScreen = () => {
   return (
     <ProfileStack.Navigator>
       <ProfileStack.Screen name="Profile" component={Profile} />
+      <ProfileStack.Screen name="SignIn" component={SignIn} />
     </ProfileStack.Navigator>
   );
 };

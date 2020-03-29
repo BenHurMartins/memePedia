@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "324554633935",
+    "firebase_url": "https://memepedia-595a3.firebaseio.com",
+    "project_id": "memepedia-595a3",
+    "storage_bucket": "memepedia-595a3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:324554633935:android:63193525818cc3c2313dba",
+        "android_client_info": {
+          "package_name": "com.memepedia"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "324554633935-cbifccidivcrt4ems740g0rf7dua1mv7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.memepedia",
+            "certificate_hash": "0bf9fe3889d28a9c58f0c10ab70e4328d823f320"
+          }
+        },
+        {
+          "client_id": "324554633935-3km9mn4ssei6gscji5cnokamk55fjldm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDE7mJGiWaCAzg1gnbelTd92MdXpJ38rZg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "324554633935-3km9mn4ssei6gscji5cnokamk55fjldm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

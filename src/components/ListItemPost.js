@@ -6,7 +6,6 @@ import * as Colors from '../constants/colors';
 import * as Dimensions from '../constants/dimensions';
 
 export const ListItemPost = props => {
-  console.log(props);
   return (
     <TouchableOpacity
       onPress={() => false}

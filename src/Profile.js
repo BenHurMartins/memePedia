@@ -3,7 +3,8 @@ import firebase from 'firebase';
 
 import {SafeAreaView, View, Text} from 'react-native';
 
-const Profile = () => {
+const Profile = props => {
+  console.log(props);
   const [teste, setTeste] = useState('teste2');
   useEffect(() => {
     console.log('Teste');
@@ -20,7 +21,9 @@ const Profile = () => {
     <SafeAreaView
       style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
       <Text>Profile</Text>
-      <Text>{teste}</Text>
+      <Text onPress={() => props.navigation.navigate('SignIn')}>
+        Go to Signin
+      </Text>
     </SafeAreaView>
   );
 };
