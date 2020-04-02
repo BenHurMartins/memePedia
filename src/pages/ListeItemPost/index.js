@@ -2,8 +2,8 @@ import React, {Component} from 'react';
 import {Text, TouchableOpacity, Image, View} from 'react-native';
 
 //constantes
-import * as Colors from '../constants/colors';
-import * as Dimensions from '../constants/dimensions';
+import * as Colors from '../../constants/colors';
+import * as Dimensions from '../../constants/dimensions';
 
 export const ListItemPost = props => {
   return (

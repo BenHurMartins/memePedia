@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import firebase from 'firebase';
 
 import {SafeAreaView, View, Text, FlatList} from 'react-native';
-import ListItemPost from './components/ListItemPost';
+import ListItemPost from './pages/ListeItemPost/';
 
 //Constantes
 import * as Colors from './constants/colors';
