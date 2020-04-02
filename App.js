@@ -13,6 +13,7 @@ import * as Colors from './src/constants/colors';
 
 //Telas
 import Home from './src/Home';
+import NewMeme from './src/NewMeme';
 import Profile from './src/Profile';
 import SignIn from './src/user/SignIn';
 
@@ -23,8 +24,17 @@ const Tab = createBottomTabNavigator();
 
 const HomeStackScreen = () => {
   return (
-    <HomeStack.Navigator>
+    <HomeStack.Navigator
+    // screenOptions={ ({route}) => {
+    //   route.name == 'NewMeme'?
+    // }}
+    >
       <HomeStack.Screen name="Home" component={Home} />
+      <HomeStack.Screen
+        name="NewMeme"
+        component={NewMeme}
+        options={{title: 'Novo Meme'}}
+      />
     </HomeStack.Navigator>
   );
 };

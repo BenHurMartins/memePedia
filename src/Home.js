@@ -1,7 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import firebase from 'firebase';
 
-import {SafeAreaView, View, Text, FlatList} from 'react-native';
+import {
+  SafeAreaView,
+  View,
+  Text,
+  FlatList,
+  TouchableOpacity,
+  ShadowPropTypesIOS,
+} from 'react-native';
 import ListItemPost from './components/ListItemPost';
 
 //Constantes
@@ -9,8 +16,9 @@ import * as Colors from './constants/colors';
 
 //Mock
 import {posts} from '../mock/mockPosts';
+import {color} from 'react-native-reanimated';
 
-const Home = () => {
+const Home = props => {
   const [teste, setTeste] = useState('teste2');
   useEffect(() => {
     console.log('Teste');
@@ -47,6 +55,22 @@ const Home = () => {
           getMaisPosts();
         }}
       />
+      <TouchableOpacity
+        onPress={() => props.navigation.navigate('NewMeme')}
+        style={{
+          width: 50,
+          height: 50,
+          backgroundColor: 'red',
+          borderRadius: 25,
+          alignItems: 'center',
+          justifyContent: 'center',
+          position: 'absolute',
+          zIndex: 2,
+          right: 10,
+          bottom: 10,
+        }}>
+        <Text style={{color: 'white', fontSize: 25}}>+</Text>
+      </TouchableOpacity>
     </SafeAreaView>
   );
 };
