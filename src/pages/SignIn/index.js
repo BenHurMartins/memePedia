@@ -2,6 +2,9 @@ import React, {useEffect, useState} from 'react';
 import firebase from 'firebase';
 import {GoogleSignin} from '@react-native-community/google-signin';
 
+//styles
+import styles from './styles';
+
 import {SafeAreaView, View, Text} from 'react-native';
 
 const SignIn = () => {
@@ -54,9 +57,10 @@ const SignIn = () => {
     // handleSignIn2();
   };
 
+  const {container} = styles;
+
   return (
-    <SafeAreaView
-      style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
+    <SafeAreaView style={container}>
       <Text onPress={() => handleSignIn()}>SignIn</Text>
       <Text>{teste}</Text>
     </SafeAreaView>

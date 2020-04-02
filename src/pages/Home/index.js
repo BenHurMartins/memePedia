@@ -1,16 +1,28 @@
 import React, {useEffect, useState} from 'react';
 import firebase from 'firebase';
 
-import {SafeAreaView, View, Text, FlatList} from 'react-native';
-import ListItemPost from './pages/ListeItemPost/';
+import {
+  SafeAreaView,
+  View,
+  Text,
+  FlatList,
+  TouchableOpacity,
+  ShadowPropTypesIOS,
+} from 'react-native';
+import ListItemPost from '../ListItemPost';
+
+//styles
+
+import styles from './styles';
 
 //Constantes
-import * as Colors from './constants/colors';
+import * as Colors from '../../constants/colors';
 
 //Mock
-import {posts} from '../mock/mockPosts';
+import {posts} from '../../../mock/mockPosts';
+import {color} from 'react-native-reanimated';
 
-const Home = () => {
+const Home = props => {
   const [teste, setTeste] = useState('teste2');
   useEffect(() => {
     console.log('Teste');
@@ -33,9 +45,11 @@ const Home = () => {
   const getMaisPosts = () => {
     return false;
   };
+
+  const {container, floatingButton, floatingButtonText} = styles;
+
   return (
-    <SafeAreaView
-      style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
+    <SafeAreaView style={container}>
       <FlatList
         style={{backgroundColor: Colors.background}}
         keyExtractor={keyExtractor}
@@ -47,6 +61,11 @@ const Home = () => {
           getMaisPosts();
         }}
       />
+      <TouchableOpacity
+        onPress={() => props.navigation.navigate('NewMeme')}
+        style={floatingButton}>
+        <Text style={floatingButtonText}>+</Text>
+      </TouchableOpacity>
     </SafeAreaView>
   );
 };

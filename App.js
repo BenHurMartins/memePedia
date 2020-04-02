@@ -12,9 +12,10 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import * as Colors from './src/constants/colors';
 
 //Telas
-import Home from './src/Home';
-import Profile from './src/Profile';
-import SignIn from './src/user/SignIn';
+import Home from './src/pages/Home';
+import NewMeme from './src/pages/NewMeme';
+import Profile from './src/pages/Profile';
+import SignIn from './src/pages/SignIn';
 
 const HomeStack = createStackNavigator();
 const ProfileStack = createStackNavigator();
@@ -23,8 +24,17 @@ const Tab = createBottomTabNavigator();
 
 const HomeStackScreen = () => {
   return (
-    <HomeStack.Navigator>
+    <HomeStack.Navigator
+    // screenOptions={ ({route}) => {
+    //   route.name == 'NewMeme'?
+    // }}
+    >
       <HomeStack.Screen name="Home" component={Home} />
+      <HomeStack.Screen
+        name="NewMeme"
+        component={NewMeme}
+        options={{title: 'Novo Meme'}}
+      />
     </HomeStack.Navigator>
   );
 };
