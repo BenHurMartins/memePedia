@@ -5,7 +5,7 @@ import {Text, TouchableOpacity, Image, View} from 'react-native';
 import styles from './styles';
 
 //constantes
-import * as Colors from '../../constants/colors';
+import {Colors} from '../../constants/';
 
 export const ListItemPost = props => {
   const {image, item} = styles;

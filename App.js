@@ -9,7 +9,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
 // import {Ionicons} from '@expo/vector-icons';
 //Constantes
-import * as Colors from './src/constants/colors';
+import {Colors} from './src/constants/index';
 
 //Telas
 import Home from './src/pages/Home';
