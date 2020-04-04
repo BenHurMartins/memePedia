@@ -48,8 +48,12 @@
 			</dict>
 		</dict>
 	</dict>
+		<key>NSMicrophoneUsageDescription</key>
+	<string>Nós precisamos de acesso à suas fotos para publicar o meme</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Nós precisamos de acesso à suas fotos para publicar o meme</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string>Nosso app precisa acessar sua localização</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>

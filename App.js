@@ -17,6 +17,16 @@ import NewMeme from './src/pages/NewMeme';
 import Profile from './src/pages/Profile';
 import SignIn from './src/pages/SignIn';
 
+//Redux
+import reducer from './src/reducers/';
+import thunk from 'redux-thunk';
+import {Provider} from 'react-redux';
+import {createStore, applyMiddleware} from 'redux';
+
+//Setting Redux
+const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
+const store = createStoreWithMiddleware(reducer);
+
 const HomeStack = createStackNavigator();
 const ProfileStack = createStackNavigator();
 
@@ -50,22 +60,24 @@ const ProfileStackScreen = () => {
 
 const App: () => React$Node = () => {
   return (
-    <NavigationContainer>
-      <Tab.Navigator
-        tabBarOptions={{
-          labelStyle: {color: Colors.textColor},
-          activeBackgroundColor: '#000',
-          inactiveBackgroundColor: '#111',
-        }}
-        // screenOptions={ ({route}) => {
+    <Provider store={store}>
+      <NavigationContainer>
+        <Tab.Navigator
+          tabBarOptions={{
+            labelStyle: {color: Colors.textColor},
+            activeBackgroundColor: '#000',
+            inactiveBackgroundColor: '#111',
+          }}
+          // screenOptions={ ({route}) => {
 
-        //   }
-        // }
-      >
-        <Tab.Screen name="Home" component={HomeStackScreen} />
-        <Tab.Screen name="Usuário" component={ProfileStackScreen} />
-      </Tab.Navigator>
-    </NavigationContainer>
+          //   }
+          // }
+        >
+          <Tab.Screen name="Home" component={HomeStackScreen} />
+          <Tab.Screen name="Usuário" component={ProfileStackScreen} />
+        </Tab.Navigator>
+      </NavigationContainer>
+    </Provider>
   );
 };
 

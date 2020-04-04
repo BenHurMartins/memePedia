@@ -10,7 +10,7 @@ export default StyleSheet.create({
   },
   inputContainer: {
     width: Dimensions.deviceWidth80,
-    borderBottomWidth: 1,
+    borderBottomWidth: 0,
     borderBottomColor: Colors.black,
   },
   textInput: {
@@ -37,5 +37,12 @@ export default StyleSheet.create({
     borderRadius: Dimensions.deviceWidth10,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  uploadContentImageView: {
+    width: Dimensions.deviceWidth30,
+    height: Dimensions.deviceWidth30,
+    borderRadius: Dimensions.deviceWidth30 / 10,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });

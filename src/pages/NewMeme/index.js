@@ -2,26 +2,30 @@ import React, {useEffect, useState} from 'react';
 import firebase from 'firebase';
 import {Input} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {SafeAreaView, View, Text, TouchableOpacity} from 'react-native';
+import {
+  SafeAreaView,
+  View,
+  Text,
+  TouchableOpacity,
+  Image,
+  Platform,
+} from 'react-native';
+import ImagePicker from 'react-native-image-picker';
+import {connect} from 'react-redux';
 
+//actions
+import {newPost} from '../../actions/PostActions';
 //styles
 import styles from './styles';
 
 Icon.loadFont();
 
-const NewMeme = props => {
+const NewMeme = (props) => {
   const [tags, setTags] = useState([]);
   const [title, setTitle] = useState('');
+  const [content, setContent] = useState(null);
 
-  useEffect(() => {
-    let buscaRef = firebase.database().ref('/teste/');
-    buscaRef.on('value', snapshot => {
-      console.log(snapshot.val());
-      // setTeste(snapshot.val());
-    });
-  }, []);
-
-  const renderTags = inputTags => {
+  const renderTags = (inputTags) => {
     let arrayDeTags = inputTags.split(' ');
     if (arrayDeTags.length <= 3 && tags.join(' ').length < 144) {
       setTags(arrayDeTags);
@@ -29,9 +33,26 @@ const NewMeme = props => {
     }
   };
 
+  const handleChoosePhoto = () => {
+    const options = {
+      noData: true,
+      quality: Platform.OS == 'ios' ? 0.1 : 0.3,
+      mediaType: 'photo',
+    };
+    ImagePicker.launchImageLibrary(options, (response) => {
+      if (response.uri) {
+        console.log(response);
+        setContent(response);
+      }
+    });
+  };
+
+  const postContent = () => {
+    props.newPost(title, tags, content);
+  };
+
   return (
     <SafeAreaView style={styles.container}>
-      <Text>NewMeme</Text>
       <View style={styles.viewInputContainer}>
         <Input
           label={'Título'}
@@ -45,7 +66,7 @@ const NewMeme = props => {
       </View>
       <View style={styles.viewInputContainer}>
         <Input
-          onChangeText={text => renderTags(text)}
+          onChangeText={(text) => renderTags(text)}
           label={'Tags'}
           labelStyle={styles.labelInput}
           placeholder="Tags para identificar sua postagem"
@@ -55,13 +76,38 @@ const NewMeme = props => {
           maxLength={60}
         />
       </View>
+      {content == null ? (
+        <TouchableOpacity
+          style={styles.uploadContentButton}
+          onPress={() => handleChoosePhoto()}>
+          <Icon name={'camera'} color={'black'} size={30} />
+        </TouchableOpacity>
+      ) : (
+        <TouchableOpacity
+          style={styles.uploadContentImageView}
+          onPress={() => handleChoosePhoto()}>
+          <Image
+            source={{
+              uri: content.uri,
+            }}
+            style={styles.uploadContentImageView}
+            // style={{width: 300, height: 300}}
+          />
+        </TouchableOpacity>
+      )}
       <TouchableOpacity
         style={styles.uploadContentButton}
-        onPress={() => false}>
-        <Icon name={'camera'} color={'black'} size={30} />
+        onPress={() => postContent()}>
+        <Icon name={'post'} color={'black'} size={30} />
       </TouchableOpacity>
+      <Text style={{color: 'white'}}>Teste</Text>
     </SafeAreaView>
   );
 };
 
-export default NewMeme;
+mapStateToProps = (state) => {
+  console.log(state);
+  return {};
+};
+
+export default connect(mapStateToProps, {newPost})(NewMeme);
