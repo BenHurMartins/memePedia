@@ -22,15 +22,13 @@ const Tab = createBottomTabNavigator();
 const HomeStackScreen = () => {
   return (
     <HomeStack.Navigator
-    // screenOptions={ ({route}) => {
-    //   route.name == 'NewMeme'?
-    // }}
+    // headerMode="none"
     >
       <HomeStack.Screen name="Home" component={Home} />
       <HomeStack.Screen
         name="NewMeme"
         component={NewMeme}
-        options={{title: 'Novo Meme'}}
+        options={{headerTitle: 'Novo Meme', headerShown: false}}
       />
     </HomeStack.Navigator>
   );

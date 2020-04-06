@@ -3,10 +3,11 @@ import {Dimensions, Colors, Typography} from '../../constants';
 
 export default StyleSheet.create({
   container: {
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignItems: 'center',
     flex: 1,
     backgroundColor: Colors.background,
+    paddingVertical: 40,
   },
   inputContainer: {
     width: Dimensions.deviceWidth80,
@@ -14,7 +15,7 @@ export default StyleSheet.create({
     borderBottomColor: Colors.black,
   },
   textInput: {
-    color: Colors.black,
+    color: Typography.darkTextColor,
     fontSize: Typography.smallFontSize,
   },
   labelInput: {
@@ -37,6 +38,7 @@ export default StyleSheet.create({
     borderRadius: Dimensions.deviceWidth10,
     justifyContent: 'center',
     alignItems: 'center',
+    margin: 20,
   },
   uploadContentImageView: {
     width: Dimensions.deviceWidth30,
@@ -44,5 +46,9 @@ export default StyleSheet.create({
     borderRadius: Dimensions.deviceWidth30 / 10,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  textButton: {
+    fontSize: Typography.mediumFontSize,
+    color: Typography.darkTextColor,
   },
 });

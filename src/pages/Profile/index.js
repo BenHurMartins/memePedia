@@ -6,17 +6,15 @@ import styles from './styles';
 
 import {SafeAreaView, View, Text} from 'react-native';
 
-const Profile = props => {
-  console.log(props);
+const Profile = (props) => {
   const [teste, setTeste] = useState('teste2');
-  useEffect(() => {
-    console.log('Teste');
-    let buscaRef = firebase.database().ref('/teste/');
-    buscaRef.on('value', snapshot => {
-      console.log(snapshot.val());
-      setTeste(snapshot.val());
-    });
-  }, []);
+  // useEffect(() => {
+  //   let buscaRef = firebase.database().ref('/teste/');
+  //   buscaRef.on('value', snapshot => {
+  //     console.log(snapshot.val());
+  //     setTeste(snapshot.val());
+  //   });
+  // }, []);
   //   useEffect(() => {
   //     setTeste('teste');
   //   }, []);

@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import firebase from 'firebase';
 import {Input} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {
@@ -17,7 +16,7 @@ import {connect} from 'react-redux';
 import {newPost} from '../../actions/PostActions';
 //styles
 import styles from './styles';
-
+import BackButton from '../../components/BackButton';
 Icon.loadFont();
 
 const NewMeme = (props) => {
@@ -41,7 +40,6 @@ const NewMeme = (props) => {
     };
     ImagePicker.launchImageLibrary(options, (response) => {
       if (response.uri) {
-        console.log(response);
         setContent(response);
       }
     });
@@ -53,6 +51,7 @@ const NewMeme = (props) => {
 
   return (
     <SafeAreaView style={styles.container}>
+      <BackButton navigation={props.navigation} />
       <View style={styles.viewInputContainer}>
         <Input
           label={'Título'}
@@ -98,15 +97,13 @@ const NewMeme = (props) => {
       <TouchableOpacity
         style={styles.uploadContentButton}
         onPress={() => postContent()}>
-        <Icon name={'post'} color={'black'} size={30} />
+        <Text style={styles.textButton}>Vai!</Text>
       </TouchableOpacity>
-      <Text style={{color: 'white'}}>Teste</Text>
     </SafeAreaView>
   );
 };
 
 mapStateToProps = (state) => {
-  console.log(state);
   return {};
 };
 

@@ -1,16 +1,8 @@
 import React, {useEffect, useState} from 'react';
-import firebase from 'firebase';
 
-import {
-  SafeAreaView,
-  View,
-  Text,
-  FlatList,
-  TouchableOpacity,
-  ShadowPropTypesIOS,
-} from 'react-native';
+import {SafeAreaView, Text, FlatList, TouchableOpacity} from 'react-native';
 import ListItemPost from '../ListItemPost';
-
+import {connect} from 'react-redux';
 //styles
 
 import styles from './styles';
@@ -18,20 +10,15 @@ import styles from './styles';
 //Constantes
 import * as Colors from '../../constants/colors';
 
-//Mock
-import {posts} from '../../../mock/mockPosts';
-import {color} from 'react-native-reanimated';
-
-const Home = props => {
+const Home = (props) => {
   const [teste, setTeste] = useState('teste2');
-  useEffect(() => {
-    console.log('Teste');
-    let buscaRef = firebase.database().ref('/teste/');
-    buscaRef.on('value', snapshot => {
-      console.log(snapshot.val());
-      setTeste(snapshot.val());
-    });
-  }, []);
+  // useEffect(() => {
+  //   let buscaRef = firebase.database().ref('/teste/');
+  //   buscaRef.on('value', (snapshot) => {
+  //     console.log(snapshot.val());
+  //     setTeste(snapshot.val());
+  //   });
+  // }, []);
   //   useEffect(() => {
   //     setTeste('teste');
   //   }, []);
@@ -53,7 +40,7 @@ const Home = props => {
       <FlatList
         style={{backgroundColor: Colors.background}}
         keyExtractor={keyExtractor}
-        data={posts}
+        data={props.mainFeed}
         refreshing={false /* incluri depois */}
         onRefresh={() => this.onRefresh()}
         renderItem={renderItem}
@@ -70,4 +57,9 @@ const Home = props => {
   );
 };
 
-export default Home;
+mapStateToProps = (state) => {
+  const {mainFeed} = state.FeedReducer;
+  return {mainFeed};
+};
+
+export default connect(mapStateToProps, {})(Home);

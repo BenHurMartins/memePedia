@@ -9,14 +9,14 @@ import {SafeAreaView, View, Text} from 'react-native';
 
 const SignIn = () => {
   const [teste, setTeste] = useState('teste2');
-  useEffect(() => {
-    console.log('Teste');
-    let buscaRef = firebase.database().ref('/teste/');
-    buscaRef.on('value', snapshot => {
-      console.log(snapshot.val());
-      setTeste(snapshot.val());
-    });
-  }, []);
+  // useEffect(() => {
+  //   console.log('Teste');
+  //   let buscaRef = firebase.database().ref('/teste/');
+  //   buscaRef.on('value', snapshot => {
+  //     console.log(snapshot.val());
+  //     setTeste(snapshot.val());
+  //   });
+  // }, []);
   //   useEffect(() => {
   //     setTeste('teste');
   //   }, []);
@@ -25,7 +25,7 @@ const SignIn = () => {
     configureGoogle();
     await GoogleSignin.hasPlayServices();
     GoogleSignin.signIn()
-      .then(data => {
+      .then((data) => {
         // Create a new Firebase credential with the token
         const credential = firebase.auth.GoogleAuthProvider.credential(
           data.idToken,
@@ -34,12 +34,12 @@ const SignIn = () => {
         // Login with the credential
         return firebase.auth().signInWithCredential(credential);
       })
-      .then(user => {
+      .then((user) => {
         // If you need to do anything with the user, do it here
         // The user will be logged in automatically by the
         // `onAuthStateChanged` listener we set up in App.js earlier
       })
-      .catch(error => {
+      .catch((error) => {
         const {code, message} = error;
         // For details of error codes, see the docs
         // The message contains the default Firebase string

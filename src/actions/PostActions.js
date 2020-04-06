@@ -4,9 +4,28 @@ import {Platform} from 'react-native';
 
 export const newPost = (title, tags, content) => {
   return async (dispatch) => {
+    dispatch({type: types.TOGGLE_POSTING, payload: true});
     console.log(content, title, tags);
 
     let downloadURL = await uploadContent(content, dispatch);
+    let date = getNumericDate();
+    let userID = firebase.auth().currentUser.uid;
+    const post = {
+      id: '',
+      title: title,
+      contentUrl: downloadURL,
+      view: 0,
+      tags: tags,
+      category: 'beta_posts',
+      date: date,
+      user: userID,
+      likes: 0,
+      dislikes: 0,
+    };
+
+    // fetch api post
+    console.log(post);
+
     console.log('downaload url' + downloadURL);
   };
 };
@@ -25,17 +44,14 @@ const uploadContent = async (content, dispatch) => {
       uploadTask.on(
         firebase.storage.TaskEvent.STATE_CHANGED,
         (snapshot) => {
-          console.log(snapshot);
           var progress =
             (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          console.log(progress);
         },
         (error) => {
           console.log(error);
         },
         () => {
           uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
-            console.log(downloadURL);
             url = downloadURL;
             resolve(url);
           });
@@ -78,4 +94,19 @@ const randomFileName = () => {
       ];
     })
     .join('');
+};
+
+const getNumericDate = () => {
+  const datinha = new Date();
+  const year = datinha.getFullYear();
+  const month =
+    datinha.getMonth().toString().length < 2
+      ? '0' + (datinha.getMonth() + 1).toString()
+      : datinha.getMonth() + 1;
+  const day =
+    datinha.getDate().toString().length < 2
+      ? '0' + datinha.getDate().toString()
+      : datinha.getDate();
+
+  return year.toString() + month.toString() + day.toString();
 };
