@@ -51,4 +51,14 @@ export default StyleSheet.create({
     fontSize: Typography.mediumFontSize,
     color: Typography.darkTextColor,
   },
+  modalView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: Colors.blackTranslucid,
+  },
+  textProgress: {
+    fontSize: Typography.smallFontSize,
+    color: Typography.lightTextColor,
+  },
 });

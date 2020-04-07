@@ -1,20 +1,22 @@
 import * as types from './types';
 import firebase from 'firebase';
-import {Platform} from 'react-native';
+import {Platform, Alert} from 'react-native';
+import axios from 'axios';
+import {NEW_POST} from '../api/api';
 
-export const newPost = (title, tags, content) => {
+export const newPost = (title, tags, content, navigation) => {
   return async (dispatch) => {
     dispatch({type: types.TOGGLE_POSTING, payload: true});
     console.log(content, title, tags);
+    console.log('Vai incluir a imagem');
 
     let downloadURL = await uploadContent(content, dispatch);
     let date = getNumericDate();
     let userID = firebase.auth().currentUser.uid;
     const post = {
-      id: '',
       title: title,
       contentUrl: downloadURL,
-      view: 0,
+      views: 0,
       tags: tags,
       category: 'beta_posts',
       date: date,
@@ -24,9 +26,25 @@ export const newPost = (title, tags, content) => {
     };
 
     // fetch api post
+    console.log('Ja incluiu a imagem');
     console.log(post);
 
     console.log('downaload url' + downloadURL);
+
+    axios
+      .post(NEW_POST, {
+        post,
+      })
+      .then((response) => {
+        console.log(response);
+        dispatch({type: types.TOGGLE_POSTING, payload: false});
+        dispatch({type: types.SET_PROGRESS, payload: 0});
+        navigation.popToTop();
+      })
+      .catch((error) => {
+        console.log(error);
+        Alert.alert('Erro', 'Algo deu errado, tenta de novo mais tarde / ToT ');
+      });
   };
 };
 
@@ -46,6 +64,7 @@ const uploadContent = async (content, dispatch) => {
         (snapshot) => {
           var progress =
             (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          dispatch({type: types.SET_PROGRESS, payload: progress});
         },
         (error) => {
           console.log(error);

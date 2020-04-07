@@ -33,6 +33,10 @@ const Home = (props) => {
     return false;
   };
 
+  const onRefresh = () => {
+    return false;
+  };
+
   const {container, floatingButton, floatingButtonText} = styles;
 
   return (
@@ -42,7 +46,7 @@ const Home = (props) => {
         keyExtractor={keyExtractor}
         data={props.mainFeed}
         refreshing={false /* incluri depois */}
-        onRefresh={() => this.onRefresh()}
+        onRefresh={() => onRefresh()}
         renderItem={renderItem}
         onEndReached={({distanceFromEnd}) => {
           getMaisPosts();

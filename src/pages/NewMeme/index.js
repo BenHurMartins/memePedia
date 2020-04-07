@@ -8,6 +8,8 @@ import {
   TouchableOpacity,
   Image,
   Platform,
+  Modal,
+  ActivityIndicator,
 } from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 import {connect} from 'react-redux';
@@ -17,6 +19,8 @@ import {newPost} from '../../actions/PostActions';
 //styles
 import styles from './styles';
 import BackButton from '../../components/BackButton';
+import {Colors} from '../../constants';
+
 Icon.loadFont();
 
 const NewMeme = (props) => {
@@ -46,11 +50,22 @@ const NewMeme = (props) => {
   };
 
   const postContent = () => {
-    props.newPost(title, tags, content);
+    props.newPost(title, tags, content, props.navigation);
   };
 
   return (
     <SafeAreaView style={styles.container}>
+      <Modal
+        animationType="fade"
+        // visible={props.posting}
+        visible={props.posting}
+        transparent={true}>
+        <View style={styles.modalView}>
+          <ActivityIndicator size="large" color={Colors.white} />
+          <Text style={styles.textProgress}>{props.progress}/100</Text>
+        </View>
+      </Modal>
+
       <BackButton navigation={props.navigation} />
       <View style={styles.viewInputContainer}>
         <Input
@@ -104,7 +119,8 @@ const NewMeme = (props) => {
 };
 
 mapStateToProps = (state) => {
-  return {};
+  const {progress, posting} = state.PostReducer;
+  return {progress, posting};
 };
 
 export default connect(mapStateToProps, {newPost})(NewMeme);
