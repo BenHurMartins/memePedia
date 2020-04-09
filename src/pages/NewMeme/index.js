@@ -39,7 +39,7 @@ const NewMeme = (props) => {
   const handleChoosePhoto = () => {
     const options = {
       noData: true,
-      quality: Platform.OS == 'ios' ? 0.1 : 0.3,
+      // quality: Platform.OS == 'ios' ? 0.1 : 0.3,
       mediaType: 'photo',
     };
     ImagePicker.launchImageLibrary(options, (response) => {

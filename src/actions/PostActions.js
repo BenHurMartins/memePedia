@@ -3,6 +3,7 @@ import firebase from 'firebase';
 import {Platform, Alert} from 'react-native';
 import axios from 'axios';
 import {NEW_POST, GET_POSTS} from '../api/api';
+import ImageResizer from 'react-native-image-resizer';
 
 export const newPost = (title, tags, content, navigation) => {
   return async (dispatch) => {
@@ -44,30 +45,54 @@ export const newPost = (title, tags, content, navigation) => {
 const uploadContent = async (content, dispatch) => {
   return new Promise(async (resolve, reject) => {
     let url = '';
-    uriToBlob(content.uri).then((blob) => {
-      const storageRef = firebase
-        .storage()
-        .ref(`/images/${randomFileName()}.jpg`);
+    let newWidth = 400;
+    let newHeight = Math.floor(content.height / (content.width / 400));
+    console.log(content);
 
-      let uploadTask = storageRef.put(blob);
-      uploadTask.on(
-        firebase.storage.TaskEvent.STATE_CHANGED,
-        (snapshot) => {
-          var progress =
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          dispatch({type: types.SET_PROGRESS, payload: progress});
-        },
-        (error) => {
-          console.log(error);
-        },
-        () => {
-          uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
-            url = downloadURL;
-            resolve(url);
-          });
-        },
-      );
-    });
+    //downsizingImage
+    ImageResizer.createResizedImage(
+      content.uri,
+      newWidth,
+      newHeight,
+      'PNG',
+      80,
+      0,
+      null,
+    )
+      .then((response) => {
+        console.log('Downsized image');
+        console.log(response);
+        uriToBlob(response.uri).then((blob) => {
+          console.log('retornou o blob');
+          const storageRef = firebase
+            .storage()
+            .ref(`/images/${randomFileName()}.png`);
+
+          let uploadTask = storageRef.put(blob);
+          uploadTask.on(
+            firebase.storage.TaskEvent.STATE_CHANGED,
+            (snapshot) => {
+              var progress = Math.floor(
+                (snapshot.bytesTransferred / snapshot.totalBytes) * 100,
+              );
+              dispatch({type: types.SET_PROGRESS, payload: progress});
+            },
+            (error) => {
+              console.log(error);
+            },
+            () => {
+              uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+                url = downloadURL;
+                resolve(url);
+              });
+            },
+          );
+        });
+      })
+      .catch((error) => {
+        console.log('Error downsizing');
+        console.log(error);
+      });
   });
 };
 
