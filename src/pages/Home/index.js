@@ -3,6 +3,8 @@ import {SafeAreaView, Text, FlatList, TouchableOpacity} from 'react-native';
 import ListItemPost from '../ListItemPost';
 import {connect} from 'react-redux';
 import NewMemeButton from '../../components/NewMemeButton';
+//actions
+import {getPosts} from '../../actions/FeedActions';
 //styles
 import styles from './styles';
 
@@ -11,29 +13,19 @@ import * as Colors from '../../constants/colors';
 
 const Home = (props) => {
   const [teste, setTeste] = useState('teste2');
-  // useEffect(() => {
-  //   let buscaRef = firebase.database().ref('/teste/');
-  //   buscaRef.on('value', (snapshot) => {
-  //     console.log(snapshot.val());
-  //     setTeste(snapshot.val());
-  //   });
-  // }, []);
-  //   useEffect(() => {
-  //     setTeste('teste');
-  //   }, []);
+
+  useEffect(() => {
+    props.getPosts(props.lastPostViewed);
+  }, []);
 
   const keyExtractor = (item, index) => index.toString();
 
   const renderItem = ({item}) => {
-    return <ListItemPost title={item.title} content={item.content} />;
-  };
-
-  const getMaisPosts = () => {
-    return false;
+    return <ListItemPost title={item.title} content={item.contentUrl} />;
   };
 
   const onRefresh = () => {
-    return false;
+    props.getPosts('0');
   };
 
   const {container} = styles;
@@ -44,11 +36,15 @@ const Home = (props) => {
         style={{backgroundColor: Colors.background}}
         keyExtractor={keyExtractor}
         data={props.mainFeed}
-        refreshing={false /* incluri depois */}
+        refreshing={props.refreshing}
         onRefresh={() => onRefresh()}
         renderItem={renderItem}
         onEndReached={({distanceFromEnd}) => {
-          getMaisPosts();
+          props.endOfFeed
+            ? false
+            : props.refreshing
+            ? false
+            : props.getPosts(props.lastPostViewed);
         }}
       />
       <NewMemeButton navigation={props.navigation} />
@@ -57,8 +53,8 @@ const Home = (props) => {
 };
 
 mapStateToProps = (state) => {
-  const {mainFeed} = state.FeedReducer;
-  return {mainFeed};
+  const {mainFeed, lastPostViewed, endOfFeed, refreshing} = state.FeedReducer;
+  return {mainFeed, lastPostViewed, endOfFeed, refreshing};
 };
 
-export default connect(mapStateToProps, {})(Home);
+export default connect(mapStateToProps, {getPosts})(Home);

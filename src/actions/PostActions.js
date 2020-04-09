@@ -4,25 +4,6 @@ import {Platform, Alert} from 'react-native';
 import axios from 'axios';
 import {NEW_POST, GET_POSTS} from '../api/api';
 
-export const getPosts = (lastViewedPost) => {
-  return async (dispatch) => {
-    dispatch({type: types.TOGGLE_REFRESHING, payload: true});
-
-    axios
-      .get(GET_POSTS, {lastViewedPost})
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.log(error);
-        Alert.alert(
-          'Erro',
-          'Algo deu errado, atualizar as postagens mais tarde ou verifique a sua conexão com a internet ',
-        );
-      });
-  };
-};
-
 export const newPost = (title, tags, content, navigation) => {
   return async (dispatch) => {
     dispatch({type: types.TOGGLE_POSTING, payload: true});
