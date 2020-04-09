@@ -1,10 +1,9 @@
 import React, {useEffect, useState} from 'react';
-
 import {SafeAreaView, Text, FlatList, TouchableOpacity} from 'react-native';
 import ListItemPost from '../ListItemPost';
 import {connect} from 'react-redux';
+import NewMemeButton from '../../components/NewMemeButton';
 //styles
-
 import styles from './styles';
 
 //Constantes
@@ -37,7 +36,7 @@ const Home = (props) => {
     return false;
   };
 
-  const {container, floatingButton, floatingButtonText} = styles;
+  const {container} = styles;
 
   return (
     <SafeAreaView style={container}>
@@ -52,11 +51,7 @@ const Home = (props) => {
           getMaisPosts();
         }}
       />
-      <TouchableOpacity
-        onPress={() => props.navigation.navigate('NewMeme')}
-        style={floatingButton}>
-        <Text style={floatingButtonText}>+</Text>
-      </TouchableOpacity>
+      <NewMemeButton navigation={props.navigation} />
     </SafeAreaView>
   );
 };

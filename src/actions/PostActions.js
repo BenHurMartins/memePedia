@@ -2,13 +2,30 @@ import * as types from './types';
 import firebase from 'firebase';
 import {Platform, Alert} from 'react-native';
 import axios from 'axios';
-import {NEW_POST} from '../api/api';
+import {NEW_POST, GET_POSTS} from '../api/api';
+
+export const getPosts = (lastViewedPost) => {
+  return async (dispatch) => {
+    dispatch({type: types.TOGGLE_REFRESHING, payload: true});
+
+    axios
+      .get(GET_POSTS, {lastViewedPost})
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+        Alert.alert(
+          'Erro',
+          'Algo deu errado, atualizar as postagens mais tarde ou verifique a sua conexão com a internet ',
+        );
+      });
+  };
+};
 
 export const newPost = (title, tags, content, navigation) => {
   return async (dispatch) => {
     dispatch({type: types.TOGGLE_POSTING, payload: true});
-    console.log(content, title, tags);
-    console.log('Vai incluir a imagem');
 
     let downloadURL = await uploadContent(content, dispatch);
     let date = getNumericDate();
@@ -24,13 +41,6 @@ export const newPost = (title, tags, content, navigation) => {
       likes: 0,
       dislikes: 0,
     };
-
-    // fetch api post
-    console.log('Ja incluiu a imagem');
-    console.log(post);
-
-    console.log('downaload url' + downloadURL);
-
     axios
       .post(NEW_POST, {
         post,
