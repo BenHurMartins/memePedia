@@ -28,7 +28,6 @@ export const newPost = (title, tags, content, navigation) => {
         post,
       })
       .then((response) => {
-        console.log(response);
         dispatch({type: types.TOGGLE_POSTING, payload: false});
         dispatch({type: types.SET_PROGRESS, payload: 0});
         navigation.popToTop();
@@ -47,7 +46,6 @@ const uploadContent = async (content, dispatch) => {
     let url = '';
     let newWidth = 400;
     let newHeight = Math.floor(content.height / (content.width / 400));
-    console.log(content);
 
     //downsizingImage
     ImageResizer.createResizedImage(
@@ -60,8 +58,6 @@ const uploadContent = async (content, dispatch) => {
       null,
     )
       .then((response) => {
-        console.log('Downsized image');
-        console.log(response);
         uriToBlob(response.uri).then((blob) => {
           console.log('retornou o blob');
           const storageRef = firebase

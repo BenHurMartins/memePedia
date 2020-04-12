@@ -9,6 +9,10 @@ export default StyleSheet.create({
     backgroundColor: Colors.background,
     paddingVertical: 40,
   },
+  containerScrollView: {
+    alignItems: 'center',
+    width: Dimensions.deviceWidth,
+  },
   inputContainer: {
     width: Dimensions.deviceWidth80,
     borderBottomWidth: 0,

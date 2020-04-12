@@ -8,8 +8,10 @@ import {
   TouchableOpacity,
   Image,
   Platform,
+  ScrollView,
   Modal,
   ActivityIndicator,
+  Dimensions,
 } from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 import {connect} from 'react-redux';
@@ -55,65 +57,67 @@ const NewMeme = (props) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Modal
-        animationType="fade"
-        // visible={props.posting}
-        visible={props.posting}
-        transparent={true}>
-        <View style={styles.modalView}>
-          <ActivityIndicator size="large" color={Colors.white} />
-          <Text style={styles.textProgress}>{props.progress}/100</Text>
-        </View>
-      </Modal>
+      <ScrollView contentContainerStyle={styles.containerScrollView}>
+        <Modal
+          animationType="fade"
+          // visible={props.posting}
+          visible={props.posting}
+          transparent={true}>
+          <View style={styles.modalView}>
+            <ActivityIndicator size="large" color={Colors.white} />
+            <Text style={styles.textProgress}>{props.progress}/100</Text>
+          </View>
+        </Modal>
 
-      <BackButton navigation={props.navigation} />
-      <View style={styles.viewInputContainer}>
-        <Input
-          label={'Título'}
-          labelStyle={styles.labelInput}
-          placeholder="Título aqui, seja criativo!"
-          inputStyle={styles.textInput}
-          inputContainerStyle={styles.inputContainer}
-          value={title}
-          onChangeText={setTitle}
-        />
-      </View>
-      <View style={styles.viewInputContainer}>
-        <Input
-          onChangeText={(text) => renderTags(text)}
-          label={'Tags'}
-          labelStyle={styles.labelInput}
-          placeholder="Tags para identificar sua postagem"
-          inputStyle={styles.textInput}
-          inputContainerStyle={styles.inputContainer}
-          value={tags.join(' ')}
-          maxLength={60}
-        />
-      </View>
-      {content == null ? (
+        {/* <BackButton navigation={props.navigation} /> */}
+        <View style={styles.viewInputContainer}>
+          <Input
+            label={'Título'}
+            labelStyle={styles.labelInput}
+            placeholder="Título aqui, seja criativo!"
+            inputStyle={styles.textInput}
+            inputContainerStyle={styles.inputContainer}
+            value={title}
+            onChangeText={setTitle}
+          />
+        </View>
+        <View style={styles.viewInputContainer}>
+          <Input
+            onChangeText={(text) => renderTags(text)}
+            label={'Tags'}
+            labelStyle={styles.labelInput}
+            placeholder="Tags para identificar sua postagem"
+            inputStyle={styles.textInput}
+            inputContainerStyle={styles.inputContainer}
+            value={tags.join(' ')}
+            maxLength={60}
+          />
+        </View>
+        {content == null ? (
+          <TouchableOpacity
+            style={styles.uploadContentButton}
+            onPress={() => handleChoosePhoto()}>
+            <Icon name={'camera'} color={'black'} size={30} />
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity
+            style={styles.uploadContentImageView}
+            onPress={() => handleChoosePhoto()}>
+            <Image
+              source={{
+                uri: content.uri,
+              }}
+              style={styles.uploadContentImageView}
+              // style={{width: 300, height: 300}}
+            />
+          </TouchableOpacity>
+        )}
         <TouchableOpacity
           style={styles.uploadContentButton}
-          onPress={() => handleChoosePhoto()}>
-          <Icon name={'camera'} color={'black'} size={30} />
+          onPress={() => postContent()}>
+          <Text style={styles.textButton}>Vai!</Text>
         </TouchableOpacity>
-      ) : (
-        <TouchableOpacity
-          style={styles.uploadContentImageView}
-          onPress={() => handleChoosePhoto()}>
-          <Image
-            source={{
-              uri: content.uri,
-            }}
-            style={styles.uploadContentImageView}
-            // style={{width: 300, height: 300}}
-          />
-        </TouchableOpacity>
-      )}
-      <TouchableOpacity
-        style={styles.uploadContentButton}
-        onPress={() => postContent()}>
-        <Text style={styles.textButton}>Vai!</Text>
-      </TouchableOpacity>
+      </ScrollView>
     </SafeAreaView>
   );
 };
