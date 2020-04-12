@@ -13,6 +13,7 @@ import Home from '../pages/Home';
 import NewMeme from '../pages/NewMeme';
 import Profile from '../pages/Profile';
 import SignIn from '../pages/SignIn';
+import ShowMeme from '../pages/ShowMeme';
 
 const HomeStack = createStackNavigator();
 const ProfileStack = createStackNavigator();
@@ -28,8 +29,10 @@ const HomeStackScreen = () => {
       <HomeStack.Screen
         name="NewMeme"
         component={NewMeme}
-        options={{headerTitle: 'Novo Meme', headerShown: false}}
+        options={{headerTitle: 'Novo Meme'}}
+        // options={{headerTitle: 'Novo Meme', headerShown: false}}
       />
+      <HomeStack.Screen name="ShowMeme" component={ShowMeme} />
     </HomeStack.Navigator>
   );
 };

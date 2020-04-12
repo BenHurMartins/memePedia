@@ -21,7 +21,7 @@ const Home = (props) => {
   const keyExtractor = (item, index) => index.toString();
 
   const renderItem = ({item}) => {
-    return <ListItemPost title={item.title} content={item.contentUrl} />;
+    return <ListItemPost navigation={props.navigation} post={item} />;
   };
 
   const onRefresh = () => {

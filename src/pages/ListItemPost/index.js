@@ -7,16 +7,18 @@ import styles from './styles';
 //constantes
 import {Colors} from '../../constants/';
 
-export const ListItemPost = props => {
+export const ListItemPost = (props) => {
   const {image, item} = styles;
 
   return (
-    <TouchableOpacity onPress={() => false} style={item}>
-      <Text style={{color: Colors.textColor}}>{props.title}</Text>
+    <TouchableOpacity
+      onPress={() => props.navigation.navigate('ShowMeme', {post: props.post})}
+      style={item}>
+      <Text style={{color: Colors.textColor}}>{props.post.title}</Text>
       <Image
         style={image}
         source={{
-          uri: props.content,
+          uri: props.post.contentUrl,
         }}
       />
     </TouchableOpacity>
