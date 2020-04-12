@@ -12,10 +12,14 @@ import {
   Alert,
 } from 'react-native';
 import {connect} from 'react-redux';
-import {Divider, Input} from 'react-native-elements';
+import {Divider, Input, ListItem} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {Dimensions} from '../../constants';
 import firebase from 'firebase';
+import axios from 'axios';
+
+//api
+import {POST_NEW_COMMENT, POST_NEW_USER} from '../../api/api';
 //actions
 import {getPosts} from '../../actions/FeedActions';
 //styles
@@ -29,8 +33,11 @@ import {mockComments} from '../../../mock/mockComments';
 const ShowMeme = (props) => {
   const {post} = props.route.params;
   const behavior = Platform.OS === 'ios' ? 'position' : '';
+
+  //State
   const [showCommentInput, setShowCommentInput] = useState(false);
   const [comment, setComment] = useState('');
+  const [refreshing, setRefreshing] = useState(false);
 
   const commentInput = () => {
     return showCommentInput ? (
@@ -69,12 +76,31 @@ const ShowMeme = (props) => {
   };
 
   const sendComment = () => {
-    const userId = firebase.auth().currentUser;
+    const {userId, userName, userPhotoURL} = props.user;
 
-    if (userId) {
-      //fetch api
-      setComment('');
-      setShowCommentInput('false');
+    if (userId && userId != '') {
+      const date = new Date();
+
+      axios
+        .post(POST_NEW_COMMENT, {
+          postId: post._id,
+          comment: comment,
+          userId: userId,
+          userName: userName,
+          userPhotoURL: userPhotoURL,
+          date: date,
+        })
+        .then((response) => {
+          Alert.alert('Sucesso', 'Comentário enviado');
+          setComment('');
+          setShowCommentInput(false);
+        })
+        .catch((error) => {
+          console.log(error);
+          Alert.alert('Erro', 'Algo deu errado, tente comentar daqui a pouco ');
+          setComment('');
+          setShowCommentInput(false);
+        });
     } else {
       Alert.alert(
         'Erro',
@@ -86,15 +112,26 @@ const ShowMeme = (props) => {
   const keyExtractor = (item, index) => index.toString();
 
   const renderItem = ({item}) => {
-    console.log(item);
     return (
-      <View>
-        <Divider style={styles.divider} />
+      // <View>
+      //   <Divider style={styles.divider} />
 
-        <View style={styles.commentView}>
-          <Text style={styles.commentText}>{item.comment}</Text>
-        </View>
-      </View>
+      //   <View style={styles.commentView}>
+      //     <Text style={styles.commentText}>{item.comment}</Text>
+      //   </View>
+      // </View>
+      <ListItem
+        leftAvatar={{
+          source: {uri: item.userPhotoURL},
+          containerStyle: styles.avatarStyle,
+        }}
+        title={item.userName}
+        subtitle={item.comment}
+        containerStyle={styles.commentView}
+        titleStyle={styles.userNameText}
+        subtitleStyle={styles.commentText}
+        topDivider
+      />
     );
   };
   return (
@@ -120,7 +157,7 @@ const ShowMeme = (props) => {
             //   style={{backgroundColor: Colors.background}}
             keyExtractor={keyExtractor}
             data={mockComments}
-            refreshing={props.refreshing}
+            refreshing={refreshing}
             onRefresh={() => onRefresh()}
             renderItem={renderItem}
             onEndReached={({distanceFromEnd}) => {
@@ -139,8 +176,8 @@ const ShowMeme = (props) => {
 };
 
 mapStateToProps = (state) => {
-  const {mainFeed, lastPostViewed, endOfFeed, refreshing} = state.FeedReducer;
-  return {mainFeed, lastPostViewed, endOfFeed, refreshing};
+  const {user} = state.SignInReducer;
+  return {user};
 };
 
 export default connect(mapStateToProps, {getPosts})(ShowMeme);

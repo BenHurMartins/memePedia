@@ -26,6 +26,7 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
   commentView: {
+    backgroundColor: Colors.background,
     width: Dimensions.deviceWidth,
     paddingVertical: 15,
     paddingHorizontal: 25,
@@ -35,6 +36,11 @@ export default StyleSheet.create({
   commentText: {
     color: Typography.lightTextColor,
     fontSize: Typography.smallFontSize,
+  },
+  userNameText: {
+    color: Typography.lightTextColor,
+    fontSize: Typography.smallFontSize,
+    fontWeight: 'bold',
   },
   divider: {
     backgroundColor: Colors.white,
@@ -64,8 +70,8 @@ export default StyleSheet.create({
     marginVertical: 20,
   },
   floatingButton: {
-    width: Dimensions.deviceWidth15,
-    height: Dimensions.deviceWidth15,
+    width: 78,
+    height: 78,
     backgroundColor: Colors.white,
     borderRadius: Dimensions.deviceWidth10,
     borderWidth: 1,
@@ -74,7 +80,11 @@ export default StyleSheet.create({
     justifyContent: 'center',
     position: 'absolute',
     zIndex: 2,
-    right: 0,
-    bottom: 10,
+    right: 1,
+    bottom: 1,
+  },
+  avatarStyle: {
+    borderWidth: 1,
+    borderColor: Colors.white,
   },
 });

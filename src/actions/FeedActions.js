@@ -12,7 +12,6 @@ export const getPosts = (lastPostViewed) => {
       .get(GET_POSTS, {params: {lastPostViewed: lastPostViewed}})
       .then((response) => {
         let posts = response.data;
-        console.log(posts);
         dispatch({type: types.TOGGLE_REFRESHING, payload: false});
         let newLastViewdPost = posts[posts.length - 1]._id;
         dispatch({type: types.SET_LAST_VIEWED_POST, payload: newLastViewdPost});

@@ -3,6 +3,9 @@ import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import firebase from 'firebase';
+import {connect} from 'react-redux';
+import {setUser} from '../actions/SignInActions';
 
 // import {Ionicons} from '@expo/vector-icons';
 //Constantes
@@ -46,7 +49,11 @@ const ProfileStackScreen = () => {
   );
 };
 
-const Routes = () => {
+const Routes = (props) => {
+  firebase.auth().onAuthStateChanged((user) => {
+    user ? props.setUser(user) : false;
+  });
+
   return (
     <NavigationContainer>
       <Tab.Navigator
@@ -66,5 +73,8 @@ const Routes = () => {
     </NavigationContainer>
   );
 };
+mapStateToProps = (state) => {
+  return {};
+};
 
-export default Routes;
+export default connect(mapStateToProps, {setUser})(Routes);
