@@ -12,7 +12,7 @@ import styles from './styles';
 import * as Colors from '../../constants/colors';
 
 const Home = (props) => {
-  const [teste, setTeste] = useState('teste2');
+  console.log(props);
 
   useEffect(() => {
     props.getPosts(props.lastPostViewed);

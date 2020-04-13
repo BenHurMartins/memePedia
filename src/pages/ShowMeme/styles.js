@@ -18,13 +18,7 @@ export default StyleSheet.create({
     borderWidth: 10,
     borderColor: 'white',
   },
-  likesBar: {
-    flexDirection: 'row',
-    width: Dimensions.deviceWidth,
-    height: Dimensions.deviceWidth10,
-    justifyContent: 'space-around',
-    alignItems: 'center',
-  },
+
   commentView: {
     backgroundColor: Colors.background,
     width: Dimensions.deviceWidth,

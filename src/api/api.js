@@ -9,3 +9,9 @@ export const POST_NEW_USER =
 
 export const POST_NEW_COMMENT =
   'https://us-central1-memepedia-595a3.cloudfunctions.net/postNewComment';
+
+export const GET_COMMENTS =
+  'https://us-central1-memepedia-595a3.cloudfunctions.net/getComments';
+
+export const REACT =
+  'https://us-central1-memepedia-595a3.cloudfunctions.net/react';

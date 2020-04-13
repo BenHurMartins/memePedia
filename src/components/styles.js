@@ -34,4 +34,22 @@ export default StyleSheet.create({
     right: 10,
     bottom: 10,
   },
+  reactionBar: {
+    flexDirection: 'row',
+    width: Dimensions.deviceWidth,
+    height: Dimensions.deviceWidth15,
+    alignItems: 'center',
+  },
+  reaction: {
+    flexDirection: 'row',
+    width: Dimensions.deviceWidth50,
+    height: Dimensions.deviceWidth10,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  reactionText: {
+    color: Typography.lightTextColor,
+    fontSize: Typography.smallFontSize,
+    marginLeft: 20,
+  },
 });

@@ -17,9 +17,10 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import {Dimensions} from '../../constants';
 import firebase from 'firebase';
 import axios from 'axios';
+import ReactionBar from '../../components/ReactionBar';
 
 //api
-import {POST_NEW_COMMENT, POST_NEW_USER} from '../../api/api';
+import {POST_NEW_COMMENT, GET_COMMENTS} from '../../api/api';
 //actions
 import {getPosts} from '../../actions/FeedActions';
 //styles
@@ -33,11 +34,37 @@ import {mockComments} from '../../../mock/mockComments';
 const ShowMeme = (props) => {
   const {post} = props.route.params;
   const behavior = Platform.OS === 'ios' ? 'position' : '';
+  const {userId, userName, userPhotoURL} = props.user;
 
   //State
   const [showCommentInput, setShowCommentInput] = useState(false);
   const [comment, setComment] = useState('');
+  const [comments, setComments] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
+
+  useEffect(() => {
+    setRefreshing(true);
+    getComments();
+  }, []);
+
+  const getComments = () => {
+    axios
+      .get(GET_COMMENTS, {params: {postId: post._id}})
+      .then((response) => {
+        let comments = response.data;
+        setComments(comments);
+        setRefreshing(false);
+      })
+      .catch((error) => {
+        dispatch({type: types.TOGGLE_REFRESHING, payload: false});
+        console.log(error);
+        setRefreshing(false);
+        Alert.alert(
+          'Erro',
+          'Algo deu errado, Não foi possível carregar os comentários para essa página ',
+        );
+      });
+  };
 
   const commentInput = () => {
     return showCommentInput ? (
@@ -51,6 +78,7 @@ const ShowMeme = (props) => {
           value={comment}
           onChangeText={setComment}
           multiline
+          onBlur={() => setShowCommentInput(false)}
         />
         <TouchableOpacity
           onPress={() => sendComment()}
@@ -76,10 +104,15 @@ const ShowMeme = (props) => {
   };
 
   const sendComment = () => {
-    const {userId, userName, userPhotoURL} = props.user;
-
+    if (comment.length == 0) {
+      alert('Você precisa comentar alguma coisa para enviar');
+      setShowCommentInput(false);
+      return false;
+    }
     if (userId && userId != '') {
       const date = new Date();
+      setComment('');
+      setShowCommentInput(false);
 
       axios
         .post(POST_NEW_COMMENT, {
@@ -92,8 +125,8 @@ const ShowMeme = (props) => {
         })
         .then((response) => {
           Alert.alert('Sucesso', 'Comentário enviado');
-          setComment('');
-          setShowCommentInput(false);
+          setRefreshing(true);
+          getComments();
         })
         .catch((error) => {
           console.log(error);
@@ -113,13 +146,6 @@ const ShowMeme = (props) => {
 
   const renderItem = ({item}) => {
     return (
-      // <View>
-      //   <Divider style={styles.divider} />
-
-      //   <View style={styles.commentView}>
-      //     <Text style={styles.commentText}>{item.comment}</Text>
-      //   </View>
-      // </View>
       <ListItem
         leftAvatar={{
           source: {uri: item.userPhotoURL},
@@ -147,27 +173,26 @@ const ShowMeme = (props) => {
               uri: post.contentUrl,
             }}
           />
-          <View style={styles.likesBar}>
-            <Text style={styles.commentText}>Gostei: {post.likes}</Text>
-            <Text style={styles.commentText}>Não gostei: {post.dislikes}</Text>
-          </View>
-          {/* <Text>ShowMeme</Text>
-        <Text>{post._id}</Text> */}
-          <FlatList
-            //   style={{backgroundColor: Colors.background}}
-            keyExtractor={keyExtractor}
-            data={mockComments}
-            refreshing={refreshing}
-            onRefresh={() => onRefresh()}
-            renderItem={renderItem}
-            onEndReached={({distanceFromEnd}) => {
-              props.endOfFeed
-                ? false
-                : props.refreshing
-                ? false
-                : props.getPosts(props.lastPostViewed);
-            }}
+          <ReactionBar
+            likes={post.likes}
+            dislikes={post.dislikes}
+            postId={post._id}
+            userId={userId}
           />
+          {comments.length > 0 ? (
+            <FlatList
+              //   style={{backgroundColor: Colors.background}}
+              keyExtractor={keyExtractor}
+              data={comments}
+              refreshing={refreshing}
+              onRefresh={() => onRefresh()}
+              renderItem={renderItem}
+            />
+          ) : (
+            <Text style={styles.commentText}>
+              Não há comentários para essa postagem, seja o primeiro a comentar!
+            </Text>
+          )}
         </ScrollView>
         {commentInput()}
       </KeyboardAvoidingView>
