@@ -52,4 +52,21 @@ export default StyleSheet.create({
     fontSize: Typography.smallFontSize,
     marginLeft: 20,
   },
+  item: {
+    width: Dimensions.deviceWidth,
+    justifyContent: 'center',
+    alignItems: 'center',
+    // height: Dimensions.deviceWidth90,
+  },
+  image: {
+    width: Dimensions.deviceWidth80,
+    // height: Dimensions.deviceWidth80,
+    // minWidth: Dimensions.deviceWidth80,
+    // minHeight: Dimensions.deviceWidth80,
+
+    // width: undefined,
+    // height: undefined,
+    borderWidth: 10,
+    // borderColor: 'white',
+  },
 });

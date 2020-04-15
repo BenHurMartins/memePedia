@@ -18,7 +18,7 @@ import {Dimensions} from '../../constants';
 import firebase from 'firebase';
 import axios from 'axios';
 import ReactionBar from '../../components/ReactionBar';
-
+import ListItemPost from '../../components//ListItemPost';
 //api
 import {POST_NEW_COMMENT, GET_COMMENTS} from '../../api/api';
 //actions
@@ -167,7 +167,7 @@ const ShowMeme = (props) => {
         enabled
         keyboardVerticalOffset={80}>
         <ScrollView contentContainerStyle={styles.containerScrollView}>
-          <Image
+          {/* <Image
             style={styles.image}
             source={{
               uri: post.contentUrl,
@@ -178,6 +178,14 @@ const ShowMeme = (props) => {
             dislikes={post.dislikes}
             postId={post._id}
             userId={userId}
+          /> */}
+          {
+            //hlc = high level component, or father component}
+          }
+          <ListItemPost
+            navigation={props.navigation}
+            post={post}
+            hlc={'ShowMeme'}
           />
           {comments.length > 0 ? (
             <FlatList

@@ -4,7 +4,7 @@ import * as types from '../actions/types';
 import {posts} from '../../mock/mockPosts';
 
 const INITIAL_STATE = {
-  mainFeed: [...posts],
+  mainFeed: [],
   lastPostViewed: '0',
   endOfFeed: false,
   refreshing: false,

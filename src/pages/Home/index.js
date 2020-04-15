@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {SafeAreaView, Text, FlatList, TouchableOpacity} from 'react-native';
-import ListItemPost from '../ListItemPost';
+import ListItemPost from '../../components/ListItemPost';
 import {connect} from 'react-redux';
 import NewMemeButton from '../../components/NewMemeButton';
 //actions
@@ -12,8 +12,6 @@ import styles from './styles';
 import * as Colors from '../../constants/colors';
 
 const Home = (props) => {
-  console.log(props);
-
   useEffect(() => {
     props.getPosts(props.lastPostViewed);
   }, []);

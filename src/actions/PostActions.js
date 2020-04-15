@@ -9,7 +9,15 @@ export const newPost = (title, tags, content, navigation) => {
   return async (dispatch) => {
     dispatch({type: types.TOGGLE_POSTING, payload: true});
 
-    let downloadURL = await uploadContent(content, dispatch);
+    let newWidth = 400;
+    let newHeight = Math.floor(content.height / (content.width / 400));
+
+    let downloadURL = await uploadContent(
+      content,
+      dispatch,
+      newWidth,
+      newHeight,
+    );
     let date = getNumericDate();
     let userID = firebase.auth().currentUser.uid;
     const post = {
@@ -22,6 +30,7 @@ export const newPost = (title, tags, content, navigation) => {
       user: userID,
       likes: 0,
       dislikes: 0,
+      contentDimensions: {width: newWidth, height: newHeight},
     };
     axios
       .post(NEW_POST, {
@@ -41,11 +50,9 @@ export const newPost = (title, tags, content, navigation) => {
 
 // Internal methods
 
-const uploadContent = async (content, dispatch) => {
+const uploadContent = async (content, dispatch, newWidth, newHeight) => {
   return new Promise(async (resolve, reject) => {
     let url = '';
-    let newWidth = 400;
-    let newHeight = Math.floor(content.height / (content.width / 400));
 
     //downsizingImage
     ImageResizer.createResizedImage(
