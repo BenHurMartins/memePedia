@@ -39,10 +39,11 @@ export default StyleSheet.create({
     width: Dimensions.deviceWidth,
     height: Dimensions.deviceWidth15,
     alignItems: 'center',
+    justifyContent: 'center',
   },
   reaction: {
     flexDirection: 'row',
-    width: Dimensions.deviceWidth50,
+    width: Dimensions.deviceWidth30,
     height: Dimensions.deviceWidth10,
     justifyContent: 'center',
     alignItems: 'center',

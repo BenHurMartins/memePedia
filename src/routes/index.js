@@ -7,10 +7,6 @@ import firebase from 'firebase';
 import {connect} from 'react-redux';
 import {setUser} from '../actions/SignInActions';
 
-// import {Ionicons} from '@expo/vector-icons';
-//Constantes
-import {Colors} from '../constants/index';
-
 //Telas
 import Home from '../pages/Home';
 import NewMeme from '../pages/NewMeme';
@@ -18,24 +14,42 @@ import Profile from '../pages/Profile';
 import SignIn from '../pages/SignIn';
 import ShowMeme from '../pages/ShowMeme';
 
+//syles
+import {Colors} from '../constants';
+
 const HomeStack = createStackNavigator();
 const ProfileStack = createStackNavigator();
 
 const Tab = createBottomTabNavigator();
 
+const headerGlobalStyles = () => {
+  return {
+    headerStyle: {
+      backgroundColor: Colors.headerColor,
+    },
+    headerTintColor: Colors.textColor,
+  };
+};
+
 const HomeStackScreen = () => {
   return (
-    <HomeStack.Navigator
-    // headerMode="none"
-    >
-      <HomeStack.Screen name="Home" component={Home} />
+    <HomeStack.Navigator>
+      <HomeStack.Screen
+        name="Home"
+        component={Home}
+        options={{...headerGlobalStyles(), headerTitle: 'Hora dos Memes'}}
+      />
       <HomeStack.Screen
         name="NewMeme"
         component={NewMeme}
-        options={{headerTitle: 'Novo Meme'}}
+        options={{headerTitle: 'Novo Meme', ...headerGlobalStyles()}}
         // options={{headerTitle: 'Novo Meme', headerShown: false}}
       />
-      <HomeStack.Screen name="ShowMeme" component={ShowMeme} />
+      <HomeStack.Screen
+        name="ShowMeme"
+        component={ShowMeme}
+        options={{...headerGlobalStyles()}}
+      />
     </HomeStack.Navigator>
   );
 };
@@ -43,8 +57,16 @@ const HomeStackScreen = () => {
 const ProfileStackScreen = () => {
   return (
     <ProfileStack.Navigator>
-      <ProfileStack.Screen name="Profile" component={Profile} />
-      <ProfileStack.Screen name="SignIn" component={SignIn} />
+      <ProfileStack.Screen
+        name="Profile"
+        component={Profile}
+        options={{...headerGlobalStyles()}}
+      />
+      <ProfileStack.Screen
+        name="SignIn"
+        component={SignIn}
+        options={{...headerGlobalStyles()}}
+      />
     </ProfileStack.Navigator>
   );
 };
@@ -59,8 +81,8 @@ const Routes = (props) => {
       <Tab.Navigator
         tabBarOptions={{
           labelStyle: {color: Colors.textColor},
-          activeBackgroundColor: '#000',
-          inactiveBackgroundColor: '#111',
+          activeBackgroundColor: Colors.navigationBarSelected,
+          inactiveBackgroundColor: Colors.navigationBar,
         }}
         // screenOptions={ ({route}) => {
 

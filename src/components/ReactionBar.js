@@ -8,6 +8,7 @@ import {REACT} from '../api/api';
 import axios from 'axios';
 
 const ReactionBar = (props) => {
+  console.log(props);
   const [updatedLikes, setUpdatedLikes] = useState(0);
   const [updatedDislikes, setUpdatedDislikes] = useState(0);
   let {postId, likes, dislikes} = props;
@@ -66,6 +67,16 @@ const ReactionBar = (props) => {
         <Text style={styles.reactionText}>
           {updatedLikes > 0 ? updatedLikes : likes}
         </Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.reaction}
+        onPress={() => props.navigation()}>
+        {/*the props.navigation will be passes as props from the HOC above this */}
+        <Icon
+          name={'comment'}
+          color={Colors.white}
+          size={Dimensions.deviceWidth7}
+        />
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.reaction}
