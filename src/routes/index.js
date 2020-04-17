@@ -1,4 +1,5 @@
 import React from 'react';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
@@ -15,8 +16,9 @@ import SignIn from '../pages/SignIn';
 import ShowMeme from '../pages/ShowMeme';
 
 //syles
-import {Colors} from '../constants';
+import {Colors, Typography} from '../constants';
 
+Icon.loadFont();
 const HomeStack = createStackNavigator();
 const ProfileStack = createStackNavigator();
 
@@ -83,12 +85,35 @@ const Routes = (props) => {
           labelStyle: {color: Colors.textColor},
           activeBackgroundColor: Colors.navigationBarSelected,
           inactiveBackgroundColor: Colors.navigationBar,
+          style: {backgroundColor: Colors.headerColor},
+          showLabel: false,
         }}
-        // screenOptions={ ({route}) => {
+        screenOptions={({route}) => ({
+          tabBarIcon: ({focused, color, size}) => {
+            let iconName;
+            switch (route.name) {
+              case 'Home':
+                iconName = 'sentiment-satisfied';
+                break;
+              case 'Usuário':
+                iconName = 'person';
+                break;
+              default:
+                break;
+            }
 
-        //   }
-        // }
-      >
+            console.log(iconName);
+            return (
+              <Icon
+                name={iconName}
+                size={
+                  focused ? Typography.bigFontSize : Typography.mediumFontSize
+                }
+                color={Colors.textColor}
+              />
+            );
+          },
+        })}>
         <Tab.Screen name="Home" component={HomeStackScreen} />
         <Tab.Screen name="Usuário" component={ProfileStackScreen} />
       </Tab.Navigator>

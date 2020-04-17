@@ -29,7 +29,7 @@ const Home = (props) => {
   const {container} = styles;
 
   return (
-    <SafeAreaView style={container}>
+    <SafeAreaView style={{container}}>
       <FlatList
         style={{backgroundColor: Colors.background}}
         keyExtractor={keyExtractor}

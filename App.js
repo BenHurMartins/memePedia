@@ -3,12 +3,15 @@ import 'react-native-gesture-handler';
 
 import React from 'react';
 import Routes from './src/routes';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 //Redux
 import reducer from './src/reducers/';
 import thunk from 'redux-thunk';
 import {Provider} from 'react-redux';
 import {createStore, applyMiddleware} from 'redux';
+
+Icon.loadFont();
 
 //Setting Redux
 const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);

@@ -8,7 +8,6 @@ import {REACT} from '../api/api';
 import axios from 'axios';
 
 const ReactionBar = (props) => {
-  console.log(props);
   const [updatedLikes, setUpdatedLikes] = useState(0);
   const [updatedDislikes, setUpdatedDislikes] = useState(0);
   let {postId, likes, dislikes} = props;

@@ -66,7 +66,6 @@ const uploadContent = async (content, dispatch, newWidth, newHeight) => {
     )
       .then((response) => {
         uriToBlob(response.uri).then((blob) => {
-          console.log('retornou o blob');
           const storageRef = firebase
             .storage()
             .ref(`/images/${randomFileName()}.png`);
