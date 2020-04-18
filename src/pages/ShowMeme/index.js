@@ -167,21 +167,6 @@ const ShowMeme = (props) => {
         enabled
         keyboardVerticalOffset={80}>
         <ScrollView contentContainerStyle={styles.containerScrollView}>
-          {/* <Image
-            style={styles.image}
-            source={{
-              uri: post.contentUrl,
-            }}
-          />
-          <ReactionBar
-            likes={post.likes}
-            dislikes={post.dislikes}
-            postId={post._id}
-            userId={userId}
-          /> */}
-          {
-            //hlc = high level component, or father component}
-          }
           <ListItemPost
             navigation={props.navigation}
             post={post}

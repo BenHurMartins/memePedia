@@ -1,11 +1,6 @@
 import React, {Component, useState, useEffect} from 'react';
-import {
-  Text,
-  TouchableOpacity,
-  View,
-  ActivityIndicator,
-  Image,
-} from 'react-native';
+import {Text, TouchableOpacity, View} from 'react-native';
+import {Divider} from 'react-native-elements';
 import ReactionBar from '../components/ReactionBar';
 import CachedImage from 'react-native-image-cache-wrapper';
 
@@ -79,10 +74,10 @@ export const ListItemPost = (props) => {
       style={{
         ...item,
         width: postWidth,
-        height:
-          contentHeight == 0
-            ? imageMinHeight + Dimensions.deviceWidth20
-            : contentHeight + Dimensions.deviceWidth20,
+        // height:
+        //   contentHeight == 0
+        //     ? imageMinHeight + Dimensions.deviceWidth40
+        //     : contentHeight + Dimensions.deviceWidth40,
       }}>
       <TouchableOpacity
         onPress={() =>
@@ -91,7 +86,7 @@ export const ListItemPost = (props) => {
             testeComponente: this,
           })
         }>
-        <Text style={{color: Colors.textColor}}>{props.post.title}</Text>
+        <Text style={styles.memeTitle}>{props.post.title}</Text>
         <CachedImage
           resizeMode={'contain'}
           style={{

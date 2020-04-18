@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {Colors} from '../../constants';
+import {Colors, Dimensions} from '../../constants';
 
 export default StyleSheet.create({
   container: {
@@ -7,5 +7,9 @@ export default StyleSheet.create({
     alignItems: 'center',
     flex: 1,
     backgroundColor: Colors.background,
+  },
+  divider: {
+    width: Dimensions.deviceWidth,
+    borderColor: Colors.white,
   },
 });

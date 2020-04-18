@@ -57,17 +57,16 @@ export default StyleSheet.create({
     width: Dimensions.deviceWidth,
     justifyContent: 'center',
     alignItems: 'center',
-    // height: Dimensions.deviceWidth90,
   },
   image: {
     width: Dimensions.deviceWidth80,
-    // height: Dimensions.deviceWidth80,
-    // minWidth: Dimensions.deviceWidth80,
-    // minHeight: Dimensions.deviceWidth80,
-
-    // width: undefined,
-    // height: undefined,
     borderWidth: 10,
-    // borderColor: 'white',
+  },
+  memeTitle: {
+    fontSize: Typography.memeTitlesSize,
+    color: Colors.textColor,
+    marginTop: 30,
+    marginBottom: 5,
+    width: Dimensions.deviceWidth80,
   },
 });

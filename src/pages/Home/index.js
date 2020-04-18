@@ -10,6 +10,7 @@ import styles from './styles';
 
 //Constantes
 import * as Colors from '../../constants/colors';
+import {Divider} from 'react-native-elements';
 
 const Home = (props) => {
   useEffect(() => {
@@ -19,7 +20,12 @@ const Home = (props) => {
   const keyExtractor = (item, index) => index.toString();
 
   const renderItem = ({item}) => {
-    return <ListItemPost navigation={props.navigation} post={item} />;
+    return (
+      <>
+        <ListItemPost navigation={props.navigation} post={item} />
+        <Divider style={styles.divider} />
+      </>
+    );
   };
 
   const onRefresh = () => {
