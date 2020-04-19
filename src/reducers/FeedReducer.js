@@ -5,6 +5,7 @@ import {posts} from '../../mock/mockPosts';
 
 const INITIAL_STATE = {
   mainFeed: [],
+  userFeed: [],
   lastPostViewed: '0',
   endOfFeed: false,
   refreshing: false,
@@ -21,6 +22,9 @@ export default (state = INITIAL_STATE, action) => {
       break;
     case types.SET_LAST_VIEWED_POST:
       return {...state, lastPostViewed: action.payload};
+      break;
+    case types.SET_USER_FEED:
+      return {...state, userFeed: action.payload};
       break;
     case types.TOGGLE_REFRESHING:
       return {...state, refreshing: action.payload};

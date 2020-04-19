@@ -16,7 +16,7 @@ import SignIn from '../pages/SignIn';
 import ShowMeme from '../pages/ShowMeme';
 
 //syles
-import {Colors, Typography} from '../constants';
+import {Colors, Typography, Dimensions} from '../constants';
 
 Icon.loadFont();
 const HomeStack = createStackNavigator();
@@ -44,13 +44,43 @@ const HomeStackScreen = () => {
       <HomeStack.Screen
         name="NewMeme"
         component={NewMeme}
-        options={{headerTitle: 'Novo Meme', ...headerGlobalStyles()}}
+        options={({navigation, route}) => ({
+          headerTitle: 'Novo Meme',
+          ...headerGlobalStyles(),
+          headerLeftContainerStyle: {
+            width: Dimensions.deviceWidth50,
+            marginLeft: 10,
+          },
+          headerLeft: () => (
+            <Icon
+              onPress={() => navigation.goBack()}
+              name={'chevron-left'}
+              size={Typography.bigFontSize}
+              color={Colors.textColor}
+            />
+          ),
+        })}
         // options={{headerTitle: 'Novo Meme', headerShown: false}}
       />
       <HomeStack.Screen
         name="ShowMeme"
         component={ShowMeme}
-        options={{...headerGlobalStyles()}}
+        options={({navigation, route}) => ({
+          headerTitle: 'Novo Meme',
+          ...headerGlobalStyles(),
+          headerLeftContainerStyle: {
+            width: Dimensions.deviceWidth50,
+            marginLeft: 10,
+          },
+          headerLeft: () => (
+            <Icon
+              onPress={() => navigation.goBack()}
+              name={'chevron-left'}
+              size={Typography.bigFontSize}
+              color={Colors.textColor}
+            />
+          ),
+        })}
       />
     </HomeStack.Navigator>
   );
@@ -101,8 +131,6 @@ const Routes = (props) => {
               default:
                 break;
             }
-
-            console.log(iconName);
             return (
               <Icon
                 name={iconName}

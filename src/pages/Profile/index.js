@@ -1,34 +1,86 @@
 import React, {useEffect, useState} from 'react';
-import firebase from 'firebase';
-
+import {connect} from 'react-redux';
+import CachedImage from 'react-native-image-cache-wrapper';
+import {SafeAreaView, View, Text, FlatList} from 'react-native';
+import {Divider} from 'react-native-elements';
+import ListItemPost from '../../components/ListItemPost';
+import {Colors} from '../../constants';
+import {getUserPosts, teste} from '../../actions/FeedActions';
 //styles
 import styles from './styles';
 
-import {SafeAreaView, View, Text} from 'react-native';
-
 const Profile = (props) => {
-  const [teste, setTeste] = useState('teste2');
-  // useEffect(() => {
-  //   let buscaRef = firebase.database().ref('/teste/');
-  //   buscaRef.on('value', snapshot => {
-  //     console.log(snapshot.val());
-  //     setTeste(snapshot.val());
-  //   });
-  // }, []);
-  //   useEffect(() => {
-  //     setTeste('teste');
-  //   }, []);
+  const {userId, userName, userPhotoURL} = props.user;
 
-  const {container} = styles;
+  useEffect(() => {
+    if (userId) {
+      // teste(userId);
+      props.getUserPosts(userId);
+    }
+  }, []);
+
+  const keyExtractor = (item, index) => index.toString();
+
+  const renderItem = ({item}) => {
+    return (
+      <>
+        <Divider style={styles.divider} />
+        <ListItemPost navigation={props.navigation} post={item} />
+      </>
+    );
+  };
+  const onRefresh = () => {
+    props.getUserPosts(userId);
+  };
 
   return (
-    <SafeAreaView style={container}>
-      <Text>Profile</Text>
-      <Text onPress={() => props.navigation.navigate('SignIn')}>
-        Go to Signin
-      </Text>
+    <SafeAreaView style={styles.container}>
+      {userId && userId != '' ? (
+        <>
+          <View style={styles.userInfoView}>
+            <CachedImage
+              resizeMode={'contain'}
+              style={styles.avatar}
+              source={{
+                uri: userPhotoURL,
+              }}
+            />
+            <Text style={styles.userNameText}>{userName}</Text>
+          </View>
+          <Divider style={styles.divider} />
+          <Text style={styles.text}>Minha Obra</Text>
+          <FlatList
+            style={{backgroundColor: Colors.background}}
+            keyExtractor={keyExtractor}
+            data={props.userFeed}
+            refreshing={props.refreshing}
+            onRefresh={() => onRefresh()}
+            renderItem={renderItem}
+            onEndReached={({distanceFromEnd}) => {
+              props.endOfFeed
+                ? false
+                : props.refreshing
+                ? false
+                : props.getUserPosts(props.lastUserPostViewed);
+            }}
+          />
+        </>
+      ) : (
+        <>
+          <Text>Realizar Login</Text>
+          <Text onPress={() => props.navigation.navigate('SignIn')}>
+            Go to Signin
+          </Text>
+        </>
+      )}
     </SafeAreaView>
   );
 };
 
-export default Profile;
+mapStateToProps = (state) => {
+  const {user} = state.SignInReducer;
+  const {userFeed, refreshing} = state.FeedReducer;
+  return {user, userFeed, refreshing};
+};
+
+export default connect(mapStateToProps, {getUserPosts})(Profile);

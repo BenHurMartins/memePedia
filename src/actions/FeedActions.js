@@ -2,7 +2,7 @@ import * as types from './types';
 import firebase from 'firebase';
 import {Platform, Alert} from 'react-native';
 import axios from 'axios';
-import {NEW_POST, GET_POSTS} from '../api/api';
+import {NEW_POST, GET_POSTS, GET_USER_POSTS} from '../api/api';
 
 export const getPosts = (lastPostViewed) => {
   return async (dispatch) => {
@@ -35,4 +35,46 @@ export const getPosts = (lastPostViewed) => {
         );
       });
   };
+};
+
+export const getUserPosts = (userId) => {
+  return async (dispatch) => {
+    dispatch({type: types.TOGGLE_REFRESHING, payload: true});
+
+    axios
+      .get(GET_USER_POSTS, {
+        params: {userId},
+      })
+      .then((response) => {
+        let posts = response.data;
+        dispatch({type: types.TOGGLE_REFRESHING, payload: false});
+        dispatch({type: types.SET_USER_FEED, payload: posts});
+      })
+      .catch((error) => {
+        dispatch({type: types.TOGGLE_REFRESHING, payload: false});
+        console.log(error);
+        Alert.alert(
+          'Erro',
+          'Algo deu errado, atualize as suas postagens mais tarde ou verifique a sua conexão com a internet ',
+        );
+      });
+  };
+};
+
+export const teste = (userId) => {
+  const postsRef = firebase.database().ref('/posts/');
+  console.log('vaiu chamar');
+  postsRef
+    .orderByChild('user')
+    .limitToLast(30)
+    .equalTo(userId)
+    .once('value', (snapshot) => {
+      let val = snapshot.val();
+      console.log(val);
+      // let valArray = _(val).map((element, id) => {
+      //   return { _id: id, ...element };
+      // });
+      // valArray = valArray.reverse();
+    })
+    .catch((error) => console.log(error));
 };

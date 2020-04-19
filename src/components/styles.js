@@ -60,7 +60,7 @@ export default StyleSheet.create({
   },
   image: {
     width: Dimensions.deviceWidth80,
-    borderWidth: 10,
+    borderWidth: 3,
   },
   memeTitle: {
     fontSize: Typography.memeTitlesSize,
