@@ -4,6 +4,10 @@ import {Platform, Alert} from 'react-native';
 import axios from 'axios';
 import {NEW_POST, GET_POSTS, GET_USER_POSTS} from '../api/api';
 
+export const toggleRefreshing = (status) => {
+  return {type: types.TOGGLE_REFRESHING, payload: status};
+};
+
 export const getPosts = (lastPostViewed) => {
   return async (dispatch) => {
     dispatch({type: types.TOGGLE_REFRESHING, payload: true});
@@ -59,22 +63,4 @@ export const getUserPosts = (userId) => {
         );
       });
   };
-};
-
-export const teste = (userId) => {
-  const postsRef = firebase.database().ref('/posts/');
-  console.log('vaiu chamar');
-  postsRef
-    .orderByChild('user')
-    .limitToLast(30)
-    .equalTo(userId)
-    .once('value', (snapshot) => {
-      let val = snapshot.val();
-      console.log(val);
-      // let valArray = _(val).map((element, id) => {
-      //   return { _id: id, ...element };
-      // });
-      // valArray = valArray.reverse();
-    })
-    .catch((error) => console.log(error));
 };

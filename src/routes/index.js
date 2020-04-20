@@ -1,4 +1,5 @@
 import React from 'react';
+import {Text} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import {NavigationContainer} from '@react-navigation/native';
@@ -6,22 +7,21 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import firebase from 'firebase';
 import {connect} from 'react-redux';
-import {setUser} from '../actions/SignInActions';
+import {setUser, signOut} from '../actions/SignInActions';
 
 //Telas
 import Home from '../pages/Home';
 import NewMeme from '../pages/NewMeme';
 import Profile from '../pages/Profile';
-import SignIn from '../pages/SignIn';
 import ShowMeme from '../pages/ShowMeme';
 
 //syles
 import {Colors, Typography, Dimensions} from '../constants';
 
 Icon.loadFont();
+
 const HomeStack = createStackNavigator();
 const ProfileStack = createStackNavigator();
-
 const Tab = createBottomTabNavigator();
 
 const headerGlobalStyles = () => {
@@ -69,7 +69,7 @@ const HomeStackScreen = () => {
           headerTitle: 'Novo Meme',
           ...headerGlobalStyles(),
           headerLeftContainerStyle: {
-            width: Dimensions.deviceWidth50,
+            // width: Dimensions.deviceWidth50,
             marginLeft: 10,
           },
           headerLeft: () => (
@@ -87,27 +87,27 @@ const HomeStackScreen = () => {
 };
 
 const ProfileStackScreen = () => {
+  // const {userId} = props.user;
+
   return (
     <ProfileStack.Navigator>
       <ProfileStack.Screen
         name="Profile"
         component={Profile}
-        options={{...headerGlobalStyles()}}
-      />
-      <ProfileStack.Screen
-        name="SignIn"
-        component={SignIn}
-        options={{...headerGlobalStyles()}}
+        options={({navigation, route}) => ({
+          headerTitle: 'Perfil',
+          ...headerGlobalStyles(),
+          headerRightContainerStyle: {
+            // width: Dimensions.deviceWidth50,
+            marginLeft: 10,
+          },
+        })}
       />
     </ProfileStack.Navigator>
   );
 };
 
 const Routes = (props) => {
-  firebase.auth().onAuthStateChanged((user) => {
-    user ? props.setUser(user) : false;
-  });
-
   return (
     <NavigationContainer>
       <Tab.Navigator
@@ -149,7 +149,8 @@ const Routes = (props) => {
   );
 };
 mapStateToProps = (state) => {
-  return {};
+  const {user} = state.SignInReducer;
+  return {user};
 };
 
-export default connect(mapStateToProps, {setUser})(Routes);
+export default connect(mapStateToProps, {setUser, signOut})(Routes);

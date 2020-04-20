@@ -1,20 +1,58 @@
 import React, {useEffect, useState} from 'react';
 import {connect} from 'react-redux';
 import CachedImage from 'react-native-image-cache-wrapper';
-import {SafeAreaView, View, Text, FlatList} from 'react-native';
+import {
+  SafeAreaView,
+  View,
+  Text,
+  FlatList,
+  TouchableOpacity,
+} from 'react-native';
 import {Divider} from 'react-native-elements';
 import ListItemPost from '../../components/ListItemPost';
-import {Colors} from '../../constants';
-import {getUserPosts, teste} from '../../actions/FeedActions';
+import {Colors, Typography} from '../../constants';
+import {getUserPosts} from '../../actions/FeedActions';
+import {signOut, signIn} from '../../actions/SignInActions';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+
 //styles
 import styles from './styles';
+Icon.loadFont();
 
 const Profile = (props) => {
   const {userId, userName, userPhotoURL} = props.user;
 
+  props.navigation.setOptions({
+    headerRight: () =>
+      userId && userId != '' ? (
+        <TouchableOpacity
+          style={{
+            flexDirection: 'row',
+            marginRight: 10,
+            alignItems: 'center',
+          }}
+          onPress={() => props.signOut()}>
+          <Text
+            style={{
+              color: Colors.textColor,
+              fontSize: Typography.smallFontSize,
+              marginRight: 5,
+            }}>
+            Sair
+          </Text>
+          <Icon
+            name={'exit-to-app'}
+            size={Typography.mediumFontSize}
+            color={Colors.textColor}
+          />
+        </TouchableOpacity>
+      ) : (
+        false
+      ),
+  });
+
   useEffect(() => {
-    if (userId) {
-      // teste(userId);
+    if (userId && userId != '') {
       props.getUserPosts(userId);
     }
   }, []);
@@ -56,21 +94,18 @@ const Profile = (props) => {
             refreshing={props.refreshing}
             onRefresh={() => onRefresh()}
             renderItem={renderItem}
-            onEndReached={({distanceFromEnd}) => {
-              props.endOfFeed
-                ? false
-                : props.refreshing
-                ? false
-                : props.getUserPosts(props.lastUserPostViewed);
-            }}
+            // onEndReached={({distanceFromEnd}) => {
+            //   props.endOfFeed
+            //     ? false
+            //     : props.refreshing
+            //     ? false
+            //     : props.getUserPosts(props.lastUserPostViewed);
+            // }}
           />
         </>
       ) : (
         <>
-          <Text>Realizar Login</Text>
-          <Text onPress={() => props.navigation.navigate('SignIn')}>
-            Go to Signin
-          </Text>
+          <Text onPress={() => props.signIn()}>SignIn</Text>
         </>
       )}
     </SafeAreaView>
@@ -83,4 +118,6 @@ mapStateToProps = (state) => {
   return {user, userFeed, refreshing};
 };
 
-export default connect(mapStateToProps, {getUserPosts})(Profile);
+export default connect(mapStateToProps, {getUserPosts, signOut, signIn})(
+  Profile,
+);

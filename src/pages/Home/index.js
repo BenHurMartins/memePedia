@@ -3,8 +3,10 @@ import {SafeAreaView, Text, FlatList, TouchableOpacity} from 'react-native';
 import ListItemPost from '../../components/ListItemPost';
 import {connect} from 'react-redux';
 import NewMemeButton from '../../components/NewMemeButton';
+import firebase from 'firebase';
 //actions
-import {getPosts} from '../../actions/FeedActions';
+import {getPosts, toggleRefreshing} from '../../actions/FeedActions';
+import {setUser} from '../../actions/SignInActions';
 //styles
 import styles from './styles';
 
@@ -13,6 +15,10 @@ import * as Colors from '../../constants/colors';
 import {Divider} from 'react-native-elements';
 
 const Home = (props) => {
+  firebase.auth().onAuthStateChanged((user) => {
+    user ? props.setUser(user) : false;
+  });
+
   useEffect(() => {
     props.getPosts(props.lastPostViewed);
   }, []);
@@ -29,6 +35,7 @@ const Home = (props) => {
   };
 
   const onRefresh = () => {
+    return false;
     props.getPosts('0');
   };
 
@@ -61,4 +68,6 @@ mapStateToProps = (state) => {
   return {mainFeed, lastPostViewed, endOfFeed, refreshing};
 };
 
-export default connect(mapStateToProps, {getPosts})(Home);
+export default connect(mapStateToProps, {getPosts, toggleRefreshing, setUser})(
+  Home,
+);
