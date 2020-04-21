@@ -26,6 +26,7 @@ export const getPosts = (lastPostViewed) => {
           posts.shift();
           dispatch({type: types.SET_MORE_POSTS, payload: posts});
         } else {
+          dispatch({type: types.SET_POSTS, payload: []});
           dispatch({type: types.SET_END_OF_FEED, payload: false});
           dispatch({type: types.SET_POSTS, payload: posts});
         }
@@ -51,6 +52,7 @@ export const getUserPosts = (userId) => {
       })
       .then((response) => {
         let posts = response.data;
+        dispatch({type: types.SET_USER_FEED, payload: []});
         dispatch({type: types.TOGGLE_REFRESHING, payload: false});
         dispatch({type: types.SET_USER_FEED, payload: posts});
       })

@@ -34,4 +34,20 @@ export default StyleSheet.create({
     color: Colors.textColor,
     margin: 15,
   },
+  signInText: {
+    fontSize: Typography.bigFontSize,
+    color: Colors.textColor,
+    margin: 15,
+  },
+  signInButton: {
+    width: Dimensions.deviceWidth30,
+    height: Dimensions.deviceWidth30,
+    backgroundColor: Colors.white,
+    borderRadius: Dimensions.deviceWidth15,
+    borderWidth: 1,
+    borderColor: Colors.black,
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: 20,
+  },
 });

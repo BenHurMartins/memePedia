@@ -10,10 +10,10 @@ import {
 } from 'react-native';
 import {Divider} from 'react-native-elements';
 import ListItemPost from '../../components/ListItemPost';
-import {Colors, Typography} from '../../constants';
+import {Colors, Typography, Dimensions} from '../../constants';
 import {getUserPosts} from '../../actions/FeedActions';
 import {signOut, signIn} from '../../actions/SignInActions';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 //styles
 import styles from './styles';
@@ -41,7 +41,7 @@ const Profile = (props) => {
             Sair
           </Text>
           <Icon
-            name={'exit-to-app'}
+            name={'sign-out'}
             size={Typography.mediumFontSize}
             color={Colors.textColor}
           />
@@ -94,19 +94,21 @@ const Profile = (props) => {
             refreshing={props.refreshing}
             onRefresh={() => onRefresh()}
             renderItem={renderItem}
-            // onEndReached={({distanceFromEnd}) => {
-            //   props.endOfFeed
-            //     ? false
-            //     : props.refreshing
-            //     ? false
-            //     : props.getUserPosts(props.lastUserPostViewed);
-            // }}
           />
         </>
       ) : (
-        <>
-          <Text onPress={() => props.signIn()}>SignIn</Text>
-        </>
+        <View style={{...styles.container, justifyContent: 'center'}}>
+          <Text style={styles.signInText}>Login com Google</Text>
+          <TouchableOpacity
+            onPress={() => props.signIn()}
+            style={styles.signInButton}>
+            <Icon
+              name={'google'}
+              color={Colors.black}
+              size={Dimensions.deviceWidth20}
+            />
+          </TouchableOpacity>
+        </View>
       )}
     </SafeAreaView>
   );

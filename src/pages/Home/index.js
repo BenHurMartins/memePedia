@@ -35,7 +35,7 @@ const Home = (props) => {
   };
 
   const onRefresh = () => {
-    return false;
+    // return false;
     props.getPosts('0');
   };
 

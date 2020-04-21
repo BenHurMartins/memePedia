@@ -24,7 +24,7 @@ const diferenceBetweenDays = (date) => {
 
 const postBorderColor = (date, goodReactions) => {
   const countingDays = diferenceBetweenDays(date);
-  const popularity = goodReactions / countingDays;
+  const popularity = goodReactions / countingDays == 0 ? 1 : countingDays;
   let postColor = Colors.white;
 
   switch (true) {
