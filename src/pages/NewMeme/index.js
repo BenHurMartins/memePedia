@@ -12,6 +12,7 @@ import {
   Modal,
   ActivityIndicator,
   Dimensions,
+  Alert,
 } from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 import {connect} from 'react-redux';
@@ -52,7 +53,19 @@ const NewMeme = (props) => {
   };
 
   const postContent = () => {
-    props.newPost(title, tags, content, props.navigation);
+    switch (true) {
+      case title.length < 4:
+        Alert.alert('', 'o título precisa ter mais do que 4 caracteres');
+        break;
+
+      case content == null:
+      case content == undefined:
+        Alert.alert('', 'Você precise selecionar uma foto.');
+        break;
+      default:
+        props.newPost(title, tags, content, props.navigation);
+        break;
+    }
   };
 
   return (

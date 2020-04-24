@@ -8,14 +8,30 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:324554633935:android:63193525818cc3c2313dba",
+        "mobilesdk_app_id": "1:324554633935:android:7bdb62236a0213f3313dba",
         "android_client_info": {
           "package_name": "com.memepedia"
         }
       },
       "oauth_client": [
         {
-          "client_id": "324554633935-cbifccidivcrt4ems740g0rf7dua1mv7.apps.googleusercontent.com",
+          "client_id": "324554633935-1bsv795a3ojleqb72157k4dp1gbnjo5h.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.memepedia",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "324554633935-112catc59f9egbs5u3kst7mu6d47ktb7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.memepedia",
+            "certificate_hash": "4983c32c7c289a0c87c3864e95e701e8dc738faa"
+          }
+        },
+        {
+          "client_id": "324554633935-3bdmn8t9g296n9n65jq7fuiolpujvdmk.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.memepedia",
@@ -38,6 +54,13 @@
             {
               "client_id": "324554633935-3km9mn4ssei6gscji5cnokamk55fjldm.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "324554633935-d14adufhgj8uj389ui9kc8sol3rptcs6.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.memepedia"
+              }
             }
           ]
         }

@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {SafeAreaView, Text, FlatList, TouchableOpacity} from 'react-native';
 import ListItemPost from '../../components/ListItemPost';
+import ListItemAnuncio from '../../components/ListItemAnuncio';
 import {connect} from 'react-redux';
 import NewMemeButton from '../../components/NewMemeButton';
 import firebase from 'firebase';
@@ -12,7 +13,7 @@ import styles from './styles';
 
 //Constantes
 import * as Colors from '../../constants/colors';
-import {Divider} from 'react-native-elements';
+import {Divider, ListItem} from 'react-native-elements';
 
 const Home = (props) => {
   firebase.auth().onAuthStateChanged((user) => {
@@ -25,13 +26,27 @@ const Home = (props) => {
 
   const keyExtractor = (item, index) => index.toString();
 
+  props.mainFeed.forEach((element, index) => {
+    console.log(element.title);
+    console.log(index);
+  });
+
   const renderItem = ({item}) => {
-    return (
-      <>
-        <ListItemPost navigation={props.navigation} post={item} />
-        <Divider style={styles.divider} />
-      </>
-    );
+    if (item.category == 'anuncio') {
+      return (
+        <>
+          <ListItemAnuncio navigation={props.navigation} post={item} />
+          <Divider style={styles.divider} />
+        </>
+      );
+    } else {
+      return (
+        <>
+          <ListItemPost navigation={props.navigation} post={item} />
+          <Divider style={styles.divider} />
+        </>
+      );
+    }
   };
 
   const onRefresh = () => {
