@@ -2,7 +2,7 @@ import * as types from './types';
 import firebase from 'firebase';
 import {Platform, Alert} from 'react-native';
 import axios from 'axios';
-import {NEW_POST, GET_POSTS} from '../api/api';
+import {NEW_POST, REMOVE_POST} from '../api/api';
 import ImageResizer from 'react-native-image-resizer';
 
 export const newPost = (title, tags, content, navigation) => {
@@ -131,6 +131,28 @@ const randomFileName = () => {
       ];
     })
     .join('');
+};
+
+export const removePost = (postId, navigation) => {
+  console.log(postId);
+  return async (dispatch) => {
+    axios
+      .post(REMOVE_POST, {
+        postId,
+      })
+      .then((response) => {
+        dispatch({type: types.REMOVE_POST, payload: postId});
+        Alert.alert('', 'Sua postagem foi excluída com sucesso');
+        navigation.popToTop();
+      })
+      .catch((error) => {
+        console.log(error);
+        Alert.alert(
+          'Erro',
+          'Algo deu errado ao tentar excluir seu post, favor tentar mais tarde. ',
+        );
+      });
+  };
 };
 
 const getNumericDate = () => {

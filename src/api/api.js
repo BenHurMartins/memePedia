@@ -18,3 +18,6 @@ export const GET_COMMENTS =
 
 export const REACT =
   'https://us-central1-memepedia-595a3.cloudfunctions.net/react';
+
+export const REMOVE_POST =
+  'https://us-central1-memepedia-595a3.cloudfunctions.net/removePost';

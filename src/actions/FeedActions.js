@@ -17,7 +17,12 @@ export const getPosts = (lastPostViewed) => {
       .then((response) => {
         let posts = response.data;
         dispatch({type: types.TOGGLE_REFRESHING, payload: false});
-        let newLastViewdPost = posts[posts.length - 1]._id;
+        let newLastViewdPost = 0;
+        if (posts[posts.length - 1].category == 'anuncio') {
+          newLastViewdPost = posts[posts.length - 2]._id;
+        } else {
+          newLastViewdPost = posts[posts.length - 1]._id;
+        }
         dispatch({type: types.SET_LAST_VIEWED_POST, payload: newLastViewdPost});
         if (lastPostViewed != 0) {
           //The first element is the same passed as parameter, so we need to shift the array

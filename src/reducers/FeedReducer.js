@@ -31,6 +31,14 @@ export default (state = INITIAL_STATE, action) => {
       break;
     case types.SET_END_OF_FEED:
       return {...state, endOfFeed: action.payload};
+    // case types.REMOVE_POST:
+    //   let filteredMainFeed = state.mainFeed.filter((element) => {
+    //     return element._id != action.payload;
+    //   });
+    //   let filteredUserFeed = state.mainFeed.filter((element) => {
+    //     return element._id != action.payload;
+    //   });
+    //   return {...state, mainFeed: filteredMainFeed, userFeed: filteredUserFeed};
     default:
       return state;
       break;
