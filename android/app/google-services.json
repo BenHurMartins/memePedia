@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "324554633935-rs6h89581dnanphr4lbj9tp6ac7qes7j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.memepedia",
+            "certificate_hash": "801814a954c0a0b0449dbcb69c6cf9d3315cc150"
+          }
+        },
+        {
           "client_id": "324554633935-1bsv795a3ojleqb72157k4dp1gbnjo5h.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
