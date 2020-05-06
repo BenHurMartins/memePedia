@@ -15,6 +15,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "324554633935-k3rjvdijtt56770n7mjac0banero4m2c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.memepedia",
+            "certificate_hash": "a95661594eca5671ca13c81a35cc648b116c180e"
+          }
+        },
+        {
+          "client_id": "324554633935-qse8drv1cq09rrsmhqitr1pg0juetir6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.memepedia",
+            "certificate_hash": "99e89e9531a6a1e5cdf13842007f0bbb393bc77b"
+          }
+        },
+        {
           "client_id": "324554633935-rs6h89581dnanphr4lbj9tp6ac7qes7j.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
